@@ -1,8 +1,28 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, Button, NativeSyntheticEvent, NativeTouchEvent, Image, ScrollView } from 'react-native';
 
+var express = require('express')
+var app = express();
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+
+// connecting to database using MongoDB
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://majesty_uwagerikpe:atlasadmin2019@cluster-atlas-2jaxm.azure.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
+
+// database requirements
+var User = require('./models/User.tsx');
+
 export default class App1 extends React.Component {
-  state = {showMajesty: false}; 
+  state = {showMajesty: false};
 
   public onPress(ev: NativeSyntheticEvent<NativeTouchEvent>) {
     console.log("");
@@ -21,11 +41,11 @@ export default class App1 extends React.Component {
         justifyContent: 'center',
       },
     });
-  
+
     const majesty = (
       <Image source = {pic} style={{width: 400, height: 400}}/>
     );
-  
+
     return(
       <ScrollView>
         <Text style={{fontSize:296}}>Scroll me</Text>
@@ -44,8 +64,15 @@ export default class App1 extends React.Component {
 
 let showPic: boolean = false;
 function App() {
-  
+
 }
 
 
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
