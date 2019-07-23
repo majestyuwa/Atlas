@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Button, NativeSyntheticEvent, NativeTouchEvent, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, NativeSyntheticEvent, NativeTouchEvent, Image, ScrollView } from 'react-native';
 
 export default class App1 extends React.Component {
   state = {showMajesty: false}; 
@@ -27,10 +27,17 @@ export default class App1 extends React.Component {
     );
   
     return(
+      <ScrollView>
+        <Text style={{fontSize:296}}>Scroll me</Text>
+        <Text style={{fontSize:296}}>Keep going</Text>
+        <Text style={{fontSize:296}}>Almost there</Text>
+        <Text style={{fontSize:296}}>So close</Text>
+        <Text style={{fontSize:296}}>Keep scrolling</Text>
     <View style={styles.container}>
       <Button title = "Click for a surprise" onPress = {this.onPress.bind(this)}/>
       {this.state.showMajesty && majesty}
     </View>
+    </ScrollView>
     )
   };
 }
