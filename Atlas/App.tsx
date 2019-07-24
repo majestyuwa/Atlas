@@ -1,32 +1,46 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, Button, NativeSyntheticEvent, NativeTouchEvent, Image, ScrollView } from 'react-native';
+import { createAppContainer, createStackNavigator, StackActions, NavigationActions, NavigationNavigatorProps } from 'react-navigation';
+import Login from './Login';
 
-var express = require('express')
-var app = express();
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+// var express = require('express')
+// var app = express();
+// var bodyParser = require('body-parser');
+// var mongoose = require('mongoose');
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded());
 
-// connecting to database using MongoDB
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://majesty_uwagerikpe:atlasadmin2019@cluster-atlas-2jaxm.azure.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
+// // connecting to database using MongoDB
+// const MongoClient = require('mongodb').MongoClient;
+// const uri = "mongodb+srv://majesty_uwagerikpe:atlasadmin2019@cluster-atlas-2jaxm.azure.mongodb.net/test?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//   client.close();
+// });
 
-// database requirements
-var User = require('./models/User.tsx');
+// // database requirements
+// var User = require('./models/User.tsx');
 
-export default class App1 extends React.Component {
-  state = {showMajesty: false};
+class App extends React.Component<NavigationNavigatorProps> {
 
   public onPress(ev: NativeSyntheticEvent<NativeTouchEvent>) {
     console.log("");
-    this.setState({showMajesty: !this.state.showMajesty});
+  }
+
+  public onLogInPress(ev: NativeSyntheticEvent<NativeTouchEvent>) {
+    console.log("");
+    this.props.navigation.dispatch(StackActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Login' })
+      ],
+    }))
+  }
+
+  public onCreateAccountPress(ev: NativeSyntheticEvent<NativeTouchEvent>) {
+    console.log("");
   }
 
   public render() {
@@ -47,26 +61,14 @@ export default class App1 extends React.Component {
     );
 
     return(
-      <ScrollView>
-        <Text style={{fontSize:296}}>Scroll me</Text>
-        <Text style={{fontSize:296}}>Keep going</Text>
-        <Text style={{fontSize:296}}>Almost there</Text>
-        <Text style={{fontSize:296}}>So close</Text>
-        <Text style={{fontSize:296}}>Keep scrolling</Text>
     <View style={styles.container}>
-      <Button title = "Click for a surprise" onPress = {this.onPress.bind(this)}/>
-      {this.state.showMajesty && majesty}
+      <Image source = {require('./assets/atlas_logo.png')} style={{width: 350, height: 150}}/>
+      <Button title = "Log in" onPress = {this.onLogInPress.bind(this)} />
+      <Button title = "Create account" onPress = {this.onCreateAccountPress.bind(this)}/>      
     </View>
-    </ScrollView>
     )
   };
 }
-
-let showPic: boolean = false;
-function App() {
-
-}
-
 
 const styles = StyleSheet.create({
   container: {
@@ -76,3 +78,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+const AppNavigator = createStackNavigator({
+  Home: {
+    screen: App,
+  },
+  Login: {
+    screen: Login,
+  },
+}, {
+    initialRouteName: 'Home',
+});
+
+export default createAppContainer(AppNavigator);
